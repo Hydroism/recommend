@@ -1,0 +1,30 @@
+
+
+// 背景图片地址和大小
+@mixin bis($url) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.common-notice {
+  font-size: .5rem;
+}
+
+.common-font{
+  font-size: .7rem;
+}
+
+.common-sub-font{
+  font-size: .8rem;
+}
+
+.common-title{
+  font-size: 1rem;
+}
