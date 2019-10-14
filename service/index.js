@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
     // oneUser.save().then(()=>{
     //     console.log('插入成功');
     // });
-
+    //
     let user = await User.findOne({password:123456}).exec();
     console.log('--------------');
     console.log(user);
