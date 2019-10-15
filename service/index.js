@@ -7,18 +7,18 @@ const mongoose = require('mongoose')
     await connect();
     initSchemas();
     const User = mongoose.model('User');
-    // let oneUser = new User({
-    //     userName:"Hy2",
-    //     password:'123456'
-    // });
-    // oneUser.save().then(()=>{
-    //     console.log('插入成功');
-    // });
-    //
-    let user = await User.findOne({password:123456}).exec();
-    console.log('--------------');
-    console.log(user);
-    console.log('--------------');
+    let oneUser = new User({
+        userName:"Hy5",
+        password:'123456789'
+    });
+    oneUser.save().then(()=>{
+        console.log('插入成功');
+    });
+
+    // let user = await User.findOne({password:123456}).exec();
+    // console.log('--------------');
+    // console.log(user);
+    // console.log('--------------');
 })();
 
 app.use(async (ctx, next) => {

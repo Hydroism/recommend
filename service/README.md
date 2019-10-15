@@ -10,3 +10,4 @@
 > https://robomongo.org/download => robo3t-1.3.1-windows-x86_64-7419c406.exe
 
 ### bcrypt 跨平台加密工具
+> npm i bcrypt -S 很容易安装失败，解决方案为npm i node-pre-gyp -g + 翻墙。最终安装成功

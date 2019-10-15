@@ -9,7 +9,7 @@ exports.initSchemas = () => {
 
 exports.connect = () => {
     //连接数据库
-    mongoose.set('useCreateIndex', true)
+    mongoose.set('useCreateIndex', true);
     mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
     let currentConnetTime = 0;
     let maxConnectTime = 3;
