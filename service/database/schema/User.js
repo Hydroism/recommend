@@ -11,6 +11,8 @@ const userSchema = new Schema({
     password: {type: String},
     createTime: {type: Date, default: Date.now()},
     lastLoginTime: {type: Date, default: Date.now()}
+},{
+    collection:'user'
 });
 
 userSchema.pre('save', function (next) {

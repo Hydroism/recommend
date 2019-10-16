@@ -1,9 +1,12 @@
 import {post, get} from "./http";
 
-const home = {
+const service = {
     getHomeData() {
-        return get('/index', null, {isFailPage: true, isShowLoading: true});
+        return get('/index', null);
+    },
+    login(params) {
+        return post('/user/login', params)
     }
 };
 
-export default home
+export default service

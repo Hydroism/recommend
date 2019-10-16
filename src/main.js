@@ -6,9 +6,9 @@ import './config/rem'
 import './style/common.scss'
 import './style/mixin.scss'
 import './assets/theme.scss'
-import {Button, Lazyload} from 'vant'
+import {Button, Lazyload, Toast} from 'vant'
 
-Vue.use(Button);
+Vue.use(Button, Toast);
 
 Vue.use(Lazyload,{
     preload: 1.3,
