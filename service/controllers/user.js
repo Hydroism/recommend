@@ -1,15 +1,30 @@
-const mongoose = require('mongoose')
-
+const mongoose = require('mongoose');
 
 var login = async (ctx, next) => {
     const User = mongoose.model('User');
-    let newUser = new User(ctx.request.body);
+    const body = ctx.request.body;
+    const userBo = {
+        userName: body.userName,
+        password: body.password
+    };
 
-    await newUser.save().then(() => {
-        ctx.body = {
-            code: 200,
-            success: true,
-            message: '注册成功'
+    await User.findOne({userName: userBo.userName}).exec().then(async (res) => {
+        if (res) { //有账号，进行验证
+            let newUser = new User();
+            await newUser.comparePassword(userBo.password, res.password)
+                .then(isMatch => {
+                    // ctx.body = {code: 200, success: true, message: isMatch}
+                    ctx.body = isMatch ? {code: 200, success: true, message: null} : {code: 400, success: false, message: '密码错误'}
+                }).catch(error => {
+                    ctx.body = {code: 500, success: false, message: error}
+                })
+        } else { //没有账号，进行注册
+            let newUser = new User(userBo);
+            await newUser.save().then(() => {
+                ctx.body = {code: 200, success: true, message: '注册成功'}
+            }).catch(error => {
+                ctx.body = {code: 500, success: false, message: error}
+            });
         }
     }).catch(error => {
         ctx.body = {

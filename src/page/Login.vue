@@ -42,6 +42,12 @@
                 passwordMsg: ''
             }
         },
+        created() {
+            if (localStorage.userInfo) {
+                Toast.success('已登录!');
+                this.$router.go(-1)
+            }
+        },
         methods: {
             goBack() {
                 this.$router.go(-1);
@@ -57,14 +63,14 @@
                 this.$api.service.login(para).then(res => {
                     if (res.success) {
                         Toast.success('登录成功');
+                        localStorage.userInfo = {userName: this.userName};
                         this.$router.push({path: 'home'})
                     } else {
-                        console.log(res.message);
-                        Toast.fail('登录失败');
+                        Toast.fail(res.message);
                     }
                 })
             },
-            validData(){
+            validData() {
                 let isValid = true;
                 this.userNameMsg = '';
                 this.passwordMsg = '';
