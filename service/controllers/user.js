@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 var login = async (ctx, next) => {
-    const User = mongoose.model('User');
     const body = ctx.request.body;
     const userBo = {
         userName: body.userName,
         password: body.password
     };
+    const User = mongoose.model('User');
 
     await User.findOne({userName: userBo.userName}).exec().then(async (res) => {
         if (res) { //有账号，进行验证

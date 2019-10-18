@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+//过滤，将data_json，提取至filter_data
 fs.readFile('./data_json/goods.json','utf-8', (err, data) => {
     if(err) console.log(err);
     let dataObj = JSON.parse(data);

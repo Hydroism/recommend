@@ -50,27 +50,48 @@
             </div>
         </div>
 
-        <floorComponent :floorData="floorData1" :floorTitle="floorName.floor1"></floorComponent>
-        <floorComponent :floorData="floorData2" :floorTitle="floorName.floor2"></floorComponent>
-        <floorComponent :floorData="floorData3" :floorTitle="floorName.floor3"></floorComponent>
+        <floor-component :floorData="floorData1" :floorTitle="floorName.floor1"></floor-component>
+        <floor-component :floorData="floorData2" :floorTitle="floorName.floor2"></floor-component>
+        <floor-component :floorData="floorData3" :floorTitle="floorName.floor3"></floor-component>
+
+        <div class="hot-area">
+            <div class="hot-title">热卖商品</div>
+            <div class="hot-goods">
+                <van-list>
+                    <van-row gutter="20">
+                        <van-col span="12" v-for="(item, index) in hotGoods" :key="index">
+                            <goods-info :goodsId="item.goodsId" :goodsImage="item.image"
+                                        :goodsName="item.name" :goodsPrice="item.price">
+                            </goods-info>
+                        </van-col>
+                    </van-row>
+                </van-list>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
-    import {Swipe, SwipeItem} from 'vant'
+    import {Swipe, SwipeItem, List, Row, Col} from 'vant'
     import 'swiper/dist/css/swiper.css'
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
     import {toMoney} from "../filters/moneyFilter";
     import floorComponent from '../components/floorComponent'
+    import goodsInfoComponent from '../components/goodsInfoComponent'
 
     export default {
         name: "ShoppingMall",
         components: {
             'van-swipe': Swipe,
             'van-swipe-item': SwipeItem,
+            'van-list': List,
+            'van-col': Col,
+            'van-row': Row,
             'swiper': swiper,
             'swiperSlide': swiperSlide,
-            'floorComponent': floorComponent,
+            'floor-component': floorComponent,
+            'goods-info': goodsInfoComponent,
         },
         data() {
             return {
@@ -86,6 +107,7 @@
                 swiperOption: {
                     slidesPerView: 3
                 },
+                hotGoods: [],
             }
         },
         created() {
@@ -103,6 +125,7 @@
                 this.floorData2 = re.data.floor2;
                 this.floorData3 = re.data.floor3;
                 this.floorName = re.data.floorName;
+                this.hotGoods = re.data.hotGoods;
                 // }, err => {
                 //     console.log(err);
                 // })
@@ -208,6 +231,19 @@
             .swiper-wrapper > div:not(:last-of-type) {
                 border-right: 1px solid $color-light-border;
             }
+        }
+    }
+
+    .hot-area {
+        .hot-title {
+            text-align: center;
+            background-color: $color-light;
+            padding: .3rem;
+            @extend .common-sub-font;
+        }
+
+        .hot-goods {
+            background: $color-white;
         }
     }
 </style>

@@ -6,6 +6,9 @@ const service = {
     },
     login(params) {
         return post('/user/login', params)
+    },
+    getGoodsDetail(params) {
+        return post('/goods/getDetailGoodsInfo', params)
     }
 };
 

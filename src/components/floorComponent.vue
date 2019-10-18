@@ -24,16 +24,16 @@
 
 <script>
     export default {
-        name: 'floor-component',
+        name: 'floorComponent',
         props: {
             floorData: Array,
             floorTitle: String,
-    },
-    watch: {
-        floorData: function (val) {
-            // console.log(this.floorData);
+        },
+        watch: {
+            floorData: function (val) {
+                // console.log(this.floorData);
+            }
         }
-    }
     }
 </script>
 
@@ -49,16 +49,20 @@
     .floor1 {
         display: flex;
         justify-content: space-between;
+
         & > div {
             width: 50%;
         }
+
         .floor-one {
             border-top: 1px solid $color-light-border;
             border-right: 1px solid $color-light-border;
+
             &.img {
                 height: 9.722rem;
             }
         }
+
         .floor-two .img {
             border-top: 1px solid $color-light-border;
             height: 4.861rem;
@@ -68,11 +72,13 @@
     .floor2 {
         display: flex;
         flex-wrap: wrap;
+
         & > div {
             width: 50%;
             height: 4.861rem;
             border-top: 1px solid $color-light-border;
         }
+
         & > div:nth-of-type(odd) {
             border-right: 1px solid $color-light-border;
         }
