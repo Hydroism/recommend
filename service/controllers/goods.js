@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
+const {success, warn, fail} = require('./request');
 
 // filter_goods 数据导入
 var insertAllGoodsInfo = async (ctx, next) => {
@@ -72,26 +73,12 @@ var getDetailGoodsInfo = async (ctx, next) => {
     try {
         let res = await Goods.findOne({ID: GoodsIdBo.goodsId}).exec();
         if (res) {
-            ctx.body = {
-                code: 200,
-                success: true,
-                data: res,
-                message: null
-            }
+            ctx.body = success(res)
         } else {
-            ctx.body = {
-                code: 400,
-                success: false,
-                data: null,
-                message: '未查找到该商品'
-            }
+            ctx.body = warn('未查找到该商品')
         }
     } catch (error) {
-        ctx.body = {
-            code: 500,
-            success: false,
-            message: error
-        }
+        ctx.body = fail(error)
     }
 };
 
