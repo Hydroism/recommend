@@ -81,6 +81,26 @@ var getDetailGoodsInfo = async (ctx, next) => {
         ctx.body = fail(error)
     }
 };
+// goods 商品详情get方式
+var getDetailGoodsInfo2 = async (ctx, next) => {
+    const query = ctx.request.query;
+    const {goodsId} = query;  //解构赋值
+    const GoodsIdBo = {
+        goodsId: goodsId
+    };
+    const Goods = mongoose.model('Goods');
+
+    try {
+        let res = await Goods.findOne({ID: GoodsIdBo.goodsId}).exec();
+        if (res) {
+            ctx.body = success(res)
+        } else {
+            ctx.body = warn('未查找到该商品')
+        }
+    } catch (error) {
+        ctx.body = fail(error)
+    }
+};
 
 module.exports = {
     'routerName': '/goods',
@@ -88,4 +108,5 @@ module.exports = {
     'GET /insertAllCategory': insertAllCategory,
     'GET /insertCategorySub': insertCategorySub,
     'POST /getDetailGoodsInfo': getDetailGoodsInfo,
+    'GET /getDetailGoodsInfo2': getDetailGoodsInfo2,
 };

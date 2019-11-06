@@ -1,4 +1,6 @@
 const path = require("path");
+const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
 
 module.exports = {
     productionSourceMap: false,
@@ -21,6 +23,18 @@ module.exports = {
                 @import "@/assets/theme.scss";
                 @import "@/style/mixin.scss";
               `
+            },
+            postcss: { //适配方案，主要针对vant
+                plugins: [
+                    autoprefixer(),
+                    pxtorem({
+                        rootValue: 20,
+                        propList: ['*'],
+                        // 该项仅在使用 Circle 组件时需要
+                        // 原因参见 https://github.com/youzan/vant/issues/1948
+                        // selectorBlackList: ['van-circle__layer']
+                    })
+                ]
             }
         }
     },
@@ -46,5 +60,4 @@ module.exports = {
             }
         }
     }
-
 };
