@@ -132,12 +132,18 @@ var queryGoodsListByCategorySub = async (ctx, next) => {
     let pageQuery = body.pageQuery;
     const start = (pageQuery.page - 1) * pageQuery.size;
 
+    if (!CategorySubIdBo.categorySubId) {
+        ctx.body = warn('分类参数错误')
+    }
+
     try {
         const Goods = mongoose.model('Goods');
         let res = await Goods.find({SUB_ID: CategorySubIdBo.categorySubId}).skip(start).limit(pageQuery.size).exec();
+        pageQuery.totalNum = await Goods.find({SUB_ID: CategorySubIdBo.categorySubId}).count();
+        pageQuery.totalPage = Math.ceil(pageQuery.totalNum / pageQuery.size);
         ctx.body = res.length ? query(pageQuery, success(res)) : query(pageQuery, warn('该分类暂无商品'));
     } catch (error) {
-        ctx.body = query(pageQuery, fail(error))
+        ctx.body = query(pageQuery, fail())
     }
 };
 

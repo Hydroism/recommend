@@ -7,18 +7,18 @@ let success = (data, message) => {
     }
 };
 
-let fail = (message = '服务器错误') => {
+let warn = (message = '信息有误') => {
     return {
-        code: 500,
+        code: 400,
         success: false,
         data: null,
         message: message
     }
 };
 
-let warn = (message = '信息有误') => {
+let fail = (message = '服务器错误') => {
     return {
-        code: 400,
+        code: 500,
         success: false,
         data: null,
         message: message

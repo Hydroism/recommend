@@ -16,9 +16,9 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(response => {
     if (response.status === 200) {
-        return Promise.resolve(response);
+        return Promise.resolve(response.data);
     }
-    return Promise.reject(response);
+    return Promise.reject(response.data);
 }, function (error) {
     Toast.clear();
     router.push({name: 'FailPage', query: {redirect: router.currentRoute.fullPath}});  //fullPath,path会把原本链接参数重置
@@ -37,10 +37,10 @@ export function get(url, params, isLoading = true, isShowToast = true) {
             });
         }
         instance.get(url, {params: params}).then(res => {
-            if (res.data.success) {
-                resolve(res.data);
+            if (res.success) {
+                resolve(res);
             } else {
-                isShowToast ? Toast(res.data.message) : reject(res.data);
+                isShowToast ? Toast(res.message) : reject(res);
             }
         }).catch(err => {
             Toast(err);
@@ -64,10 +64,10 @@ export function post(url, params, isLoading = true, isShowToast = true) {
     }
     return new Promise((resolve, reject) => {
         instance.post(url, params).then(res => {
-            if (res.data.success) {
-                resolve(res.data);
+            if (res.success) {
+                resolve(res);
             } else {
-                isShowToast ? Toast(res.data.message) : reject(res.data);
+                isShowToast ? Toast(res.message) : reject(res);
             }
         }).catch(err => {
             Toast(err);

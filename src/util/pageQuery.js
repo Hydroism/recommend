@@ -1,4 +1,4 @@
-export function PageQuery(page = 1, size = 10) {
+export function PageQuery(page = 1, size = 5) {
     this.page = page;
     this.size = size;
     this.totalPage = 0;

@@ -28,7 +28,8 @@
 
                     <div class="list-div">
                         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-                            <van-list v-model="loading" :finished="finished"
+                            <van-list v-model="loading"
+                                      :finished="finished" finished-text="没有更多了~"
                                       :error.sync="error" error-text="请求失败，点击重新加载"
                                       @load="onLoad">
                                 <div class="list-item"
@@ -91,7 +92,6 @@
                     if (this.category.length !== 0) {
                         this.clickCategory(this.category[0].ID);
                     }
-                    console.log(this.pageQuery);
                 })
             },
             getCategorySubList(categoryId) {
@@ -100,24 +100,24 @@
                     if (this.categorySub.length !== 0) {
                         this.clickCategorySub(0);
                     }
-                    console.log(re);
                 })
             },
             queryCategoryGoodsList(categorySubId) {
-                this.$api.service.queryCategoryGoodsList({
-                    categorySubId: categorySubId,
-                    pageQuery: this.pageQuery
-                }).then(re => {
-                    this.categoryGoodsList = [...this.categoryGoodsList, ...re.data];
-                    console.log(this.categoryGoodsList);
-                    this.pageQuery.covertResponses(re.pageQuery);
-                    console.log(this.pageQuery);
-                }, err => {
-                    this.error = true;
-                    Toast(err.message);
-                }).catch(() => {
-                    this.error = true;
-                })
+                return new Promise(((resolve, reject) => {
+                    this.$api.service.queryCategoryGoodsList({
+                        categorySubId: categorySubId,
+                        pageQuery: this.pageQuery
+                    }).then(re => {
+                        this.categoryGoodsList = [...this.categoryGoodsList, ...re.data];
+                        this.pageQuery.covertResponses(re.pageQuery);
+                        resolve()
+                    }, err => {
+                        this.error = true;
+                        Toast(err.message);
+                    }).catch(() => {
+                        this.error = true;
+                    })
+                }))
             },
             clickCategory(categoryId) {
                 this.curCategoryId = categoryId;
@@ -139,9 +139,12 @@
             },
             onLoad() {
                 setTimeout(() => {
-                    // this.curCategorySubId = this.curCategorySubId || this.categorySub[0].ID;
-                    this.queryCategoryGoodsList(this.curCategorySubId);
-                    this.loading = false;
+                    this.queryCategoryGoodsList(this.curCategorySubId).then(() => {
+                        this.loading = false;
+                        if (this.categoryGoodsList.length >= this.pageQuery.totalNum) {
+                            this.finished = true;
+                        }
+                    });
                 }, 500);
             }
         }
