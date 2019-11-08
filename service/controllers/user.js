@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {success, warn, fail} = require('./request');
+const {success, warn, fail} = require('../util/request');
 
 var login = async (ctx, next) => {
     const body = ctx.request.body;
@@ -15,7 +15,7 @@ var login = async (ctx, next) => {
             await newUser.comparePassword(userBo.password, res.password)
                 .then(isMatch => {
                     // ctx.body = {code: 200, success: true, message: isMatch}
-                    ctx.body = isMatch ? success() : warn('密码错误')
+                    ctx.body = isMatch ? success('登录成功') : warn('密码错误')
                 }).catch(error => {
                     ctx.body = fail(error)
                 })

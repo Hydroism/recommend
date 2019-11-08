@@ -9,7 +9,7 @@
 个人代码中，使用了config目录rem.js 通过获取屏幕水平分辨率，控制html的font-size，css中所有需要
 适配的大小均用rem来控制大小，参考基准是iphone6/7的375px，20px为1rem来转换，取得对应rem值。
 
-但是vant默认使用了px，因此需要另外为vant的组件做适配。
+但是vant默认使用了px，因此需要另外为vant的组件做适配。。用了该方案，原方案可用px，该插件自动转为rem
 
 参考了文章https://blog.csdn.net/weixin_30242907/article/details/101909189
 

@@ -25,8 +25,19 @@ let warn = (message = '信息有误') => {
     }
 };
 
+let query = (pageQuery, data) => {
+    return {
+        code: data.code,
+        success: data.success,
+        data: data.data,
+        pageQuery: pageQuery,
+        message: data.message,
+    }
+};
+
 module.exports = {
     success,
     fail,
-    warn
+    warn,
+    query
 };

@@ -131,7 +131,7 @@
                 // })
             },
             doSearch() {
-                this.$router.push({path: 'login'})
+                this.$router.push({name: 'Login'})
             }
         },
         filters: {

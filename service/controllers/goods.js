@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
-const {success, warn, fail} = require('./request');
+const {success, warn, fail, query} = require('../util/request');
 
 // filter_goods 数据导入
 var insertAllGoodsInfo = async (ctx, next) => {
@@ -68,9 +68,9 @@ var getDetailGoodsInfo = async (ctx, next) => {
     const GoodsIdBo = {
         goodsId: body.goodsId
     };
-    const Goods = mongoose.model('Goods');
 
     try {
+        const Goods = mongoose.model('Goods');
         let res = await Goods.findOne({ID: GoodsIdBo.goodsId}).exec();
         if (res) {
             ctx.body = success(res)
@@ -88,17 +88,56 @@ var getDetailGoodsInfo2 = async (ctx, next) => {
     const GoodsIdBo = {
         goodsId: goodsId
     };
-    const Goods = mongoose.model('Goods');
 
     try {
+        const Goods = mongoose.model('Goods');
         let res = await Goods.findOne({ID: GoodsIdBo.goodsId}).exec();
-        if (res) {
-            ctx.body = success(res)
-        } else {
-            ctx.body = warn('未查找到该商品')
-        }
+        ctx.body = res ? success(res) : warn('未查找到该商品');
     } catch (error) {
         ctx.body = fail(error)
+    }
+};
+
+//获取商品分类的大类
+var getCategory = async (ctx, next) => {
+    try {
+        const Category = mongoose.model('Category');
+        let res = await Category.find().exec();
+        ctx.body = res.length ? success(res) : warn('该分类暂无下级分类');
+    } catch (error) {
+        ctx.body = fail(error)
+    }
+};
+
+//获取商品分类的中类
+var getCategorySub = async (ctx, next) => {
+    const query = ctx.request.query;
+    const {categoryId} = query;  //解构赋值
+    const CategoryIdBo = {
+        categoryId: categoryId
+    };
+
+    try {
+        const CategorySub = mongoose.model('CategorySub');
+        let res = await CategorySub.find({MALL_CATEGORY_ID: CategoryIdBo.categoryId}).exec();
+        ctx.body = res.length ? success(res) : warn('暂无商品分类');
+    } catch (error) {
+        ctx.body = fail(error)
+    }
+};
+
+var queryGoodsListByCategorySub = async (ctx, next) => {
+    const body = ctx.request.body;
+    const CategorySubIdBo = {categorySubId: body.categorySubId};
+    let pageQuery = body.pageQuery;
+    const start = (pageQuery.page - 1) * pageQuery.size;
+
+    try {
+        const Goods = mongoose.model('Goods');
+        let res = await Goods.find({SUB_ID: CategorySubIdBo.categorySubId}).skip(start).limit(pageQuery.size).exec();
+        ctx.body = res.length ? query(pageQuery, success(res)) : query(pageQuery, warn('该分类暂无商品'));
+    } catch (error) {
+        ctx.body = query(pageQuery, fail(error))
     }
 };
 
@@ -107,6 +146,10 @@ module.exports = {
     'GET /insertAllGoodsInfo': insertAllGoodsInfo,
     'GET /insertAllCategory': insertAllCategory,
     'GET /insertCategorySub': insertCategorySub,
+
     'POST /getDetailGoodsInfo': getDetailGoodsInfo,
     'GET /getDetailGoodsInfo2': getDetailGoodsInfo2,
+    'GET /getCategory': getCategory,
+    'GET /getCategorySub': getCategorySub,
+    'POST /queryGoodsListByCategorySub': queryGoodsListByCategorySub,
 };

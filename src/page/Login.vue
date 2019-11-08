@@ -61,13 +61,9 @@
                     password: this.password
                 };
                 this.$api.service.login(para).then(res => {
-                    if (res.success) {
-                        Toast.success('登录成功');
-                        localStorage.userInfo = JSON.stringify({userName: this.userName});
-                        this.$router.push({path: 'home'})
-                    } else {
-                        Toast.fail(res.message);
-                    }
+                    Toast.success(res.data);
+                    localStorage.userInfo = JSON.stringify({userName: this.userName});
+                    this.$router.push({path: 'home'})
                 })
             },
             validData() {
