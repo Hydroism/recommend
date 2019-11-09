@@ -47,7 +47,7 @@ module.exports = {
         proxy: {
             '/devApi': {
                 // 目标 API 地址
-                target: 'http://localhost:3000',
+                target: 'http://106.13.231.60:3000',
                 // 如果要代理 websockets
                 ws: false,
                 // 将主机标头的原点更改为目标URL
