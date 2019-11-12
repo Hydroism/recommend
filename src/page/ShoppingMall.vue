@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="search-bar">
-            <div class="location-icon flex-center">
+            <div class="location-icon flex-center" @click="goLocation">
                 <img :src="locationIcon" alt="定位">
             </div>
             <div class="search-input flex-center">
@@ -132,6 +132,9 @@
             },
             doSearch() {
                 this.$router.push({name: 'Login'})
+            },
+            goLocation(){
+                this.$router.push({name: 'CategoryList'})
             }
         },
         filters: {

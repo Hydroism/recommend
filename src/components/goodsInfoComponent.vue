@@ -41,6 +41,7 @@
 
         .goods-name {
             height: 1.52rem;
+            line-height: .76rem;
             overflow: hidden;
             @extend .common-font;
         }

@@ -44,20 +44,20 @@ module.exports = {
         // 设置默认端口
         port: 8080,
         // 设置代理
-        proxy: {
-            '/devApi': {
-                // 目标 API 地址
-                target: 'http://106.13.231.60:3000',
-                // 如果要代理 websockets
-                ws: false,
-                // 将主机标头的原点更改为目标URL
-                changeOrigin: true,
-                // 如果是https接口，需要配置这个参数
-                secure: false,
-                pathRewrite: {
-                    '^/devApi': ''
-                }
-            }
-        }
+        // proxy: {
+        //     '/devApi': {
+        //         // 目标 API 地址
+        //         target: 'http://106.13.231.60:3000',
+        //         // 如果要代理 websockets
+        //         ws: false,
+        //         // 将主机标头的原点更改为目标URL
+        //         changeOrigin: true,
+        //         // 如果是https接口，需要配置这个参数
+        //         secure: false,
+        //         pathRewrite: {
+        //             '^/devApi': ''
+        //         }
+        //     }
+        // }
     }
 };

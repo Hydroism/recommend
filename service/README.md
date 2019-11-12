@@ -11,3 +11,4 @@
 
 ### bcrypt 跨平台加密工具
 > npm i bcrypt -S 很容易安装失败，解决方案为npm i node-pre-gyp -g + 翻墙。最终安装成功
+> 服务器部署npm i 失败，加后缀--unsafe-perm成功
